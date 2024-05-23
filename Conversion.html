@@ -50,7 +50,7 @@ background-position : center; background-position-x: right; background-size: 14%
     </style>
   </head>
   <body onload="onloadFunc()">
-    <div style="/* margin-right: auto; *//* margin-left: auto; */width: 190px;/* text-align:center; */">
+    <div style="resize: both;/* margin-right: auto; *//* margin-left: auto; */width: 190px;/* text-align:center; */">
       <div style="/* line-height: 1.2; *//* text-align: center; *//* position: relative; *//* padding: 20px 16px 24px; *//* background-color: #fff; *//* width: 618px; */">
       <select id="measurer" class="sel convert">
         <option value="volumeUnits">Volume</option>
@@ -67,7 +67,7 @@ background-position : center; background-position-x: right; background-size: 14%
       </div>
       <div style="width: 190px;d;display: inline-block;">
         <input id="output" class="selector">
-        <select id="outVolUnits" class="unit sel">undefined<option value="Mililiters">Mililiters</option><option value="Liters">Liters</option><option selected="selected" value="Teaspoon">Teaspoon</option><option value="Tablespoon">Tablespoon</option><option value="Fluid_oz">Fluid Ounce</option><option value="Cup">Cup</option><option value="Pint">Pint</option><option value="Quart">Quart</option><option value="Gallon">Gallon</option></select>
+        <select id="outVolUnits" class="unit sel">undefined<option value="Mililiters">Mililiters</option><option value="Liters">Liters</option><option value="Teaspoon">Teaspoon</option><option value="Tablespoon">Tablespoon</option><option selected="selected" value="Fluid_oz">Fluid_oz</option><option value="Cup">Cup</option><option value="Pint">Pint</option><option value="Quart">Quart</option><option value="Gallon">Gallon</option></select>
         </div>
       </div>
     </div>
@@ -353,6 +353,7 @@ background-position : center; background-position-x: right; background-size: 14%
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
   </script>
+
 
 
 </body></html>
