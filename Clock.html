@@ -1,102 +1,27 @@
-<!-- original : https://codepen.io/SeanNorton/pen/LWBXQL -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link href="https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap" rel="stylesheet"> 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>greeting</title>
-
-<style>
-/*CSS RESETS*/
-body{
-    background-color: #fff;
-    line-height: 1.6;
-}
-h1 {
-    margin-top: 0;
-}
-        
-/*CSS START*/
-.full-table {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    font-family: 'Darumadrop One', cursive;
-    font-size: 3rem;
-}
-.card {
-    padding: 10px 25px 10px 25px;
-    border-radius: 10px;
-    background: #7aab52;
-    width: 100vw;
-    color: #fff;
-    display: flex;
-    gap: 10rem;
-}
-
-.text {
-    text-align: center;
-    flex-basis: 100%
-}
-</style>
-    
-</head>
-<body>
-<div class="full-table">    
-    <div class="card">
-      <div class="text" id="greet"></div>
-      <div class="text" id="date"></div>
-      <div class="text" id="year"></div>
-    </div>
+<link rel="stylesheet" href="style.css">
+<div id=cover>
+    <div id=time></div>
+    <div id=dt></div>
+    <div id=da></div>
 </div>
-
-<script>
-function displayGreetings(today){
-    hrs = today.getHours();
-    name="Romi"
-    if (hrs < 12)
-        greet = 'Buen día  '+name+'!';
-    else if (hrs >= 12 && hrs <= 17)
-        greet = 'Buenas tardes '+name+'!';
-    else if (hrs >= 17 && hrs <= 24)
-        greet = 'Buenas noches  '+name+'!';
-    document.getElementById('greet').innerHTML = greet;
-}
-
-function displayDate(today) {
-    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-    const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-    var dayName = days[today.getDay()];
-    var monthName = monthNames[today.getMonth()];
-    var date = today.getDate();
-    document.getElementById('date').innerHTML =dayName+", "+date+" de "+monthName;
-}
-
-function displayYear(today) {
-    var year = today.getFullYear();
-    document.getElementById('year').innerHTML = year;
-}
-
-function padZeros(num) {
-    if (num < 10) {
-        num = '0' + num
-    };
-    return num;
-}
-
-function displayWidget() {
-    var today = new Date();
-    displayGreetings(today);
-    displayDate(today);
-    displayYear(today);
-    setTimeout(displayWidget, 500);
-}
-
-displayWidget()
-// END
-</script>
-
-</body>
-</html>
+<script>function clock(){
+    var date=new Date();
+    var weekday=date.getDay();
+    var year=date.getYear();
+    var month=date.getMonth();
+    var day=date.getDate();
+    var hour=date.getHours();
+    var minute=date.getMinutes();
+    var second=date.getSeconds();
+    var days=new Array ('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday' );
+    var months=new Array('January','February','March','April','May','June','July','August','September','October','November','december');
+    var monthname=months[month];
+    var dayname=days[weekday];
+    if(year<1000){year=year+1900};
+    if(minute<10){minute='0'+minute};
+    if(second<10){second='0'+second};
+    document.getElementById('time').innerHTML=hour+':'+ minute +':'+second; 
+    document.getElementById('da').innerHTML=dayname;
+    document.getElementById('dt').innerHTML=monthname+' '+day+', '+year;
+    setTimeout('clock()',1000 )}window.onload=function(){clock();}
+    </script>
