@@ -1,6 +1,11 @@
 <html><head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link href="https://fonts.cdnfonts.com/css/bubble-garden" rel="stylesheet">
+  <link href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
+  
+    <link href="https://olivemonsterz.github.io/Widget_Notion/nidaemoji.css" rel="stylesheet">
+  
+  
+
   <link href="https://fonts.cdnfonts.com/css/planet-joy" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/spicy-crackers" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/pusing-kali" rel="stylesheet">
@@ -47,20 +52,12 @@
     }  
     
     #container {
-      display:inline-block;
-      vertical-align:baseline;
       width: 190px;
-      margin-bottom: 10px;
       text-align: center;
-      
     }
 
     #clock {
-      font-family: 'Planet-Joy', sans-serif;
-      font-family: 'Spicy Crackers', sans-serif;
-      font-family: 'Pusing Kali', sans-serif;
-      font-family: 'Monday Banana', sans-serif;                                          
-      font-size: 54px;
+      font-family: 'Monday Banana', sans-serif;                               font-size: 54px;
       font-weight: bold;
       color: #92695b;
       text-shadow: 1px 1px 2px pink;
@@ -69,29 +66,37 @@
     }
     
        #status {
-         font-family: 'Grilled Fish', sans-serif;
-         font-family: 'Spicy Pasta', sans-serif;
-         font-family: 'Marinero Tatuado', sans-serif;
-         font-family: 'New Class', sans-serif;
-         font-family: 'Adventrue', sans-serif;
-                                                
-                                                
+      font-family: 'Adventrue', sans-serif;
       font-size: 15px;
       color: #92695b;
       margin-left: -13px;
     }
 
-    #date {
-      font-family: 'Bubble Garden', sans-serif;
-      font-family: 'Sweper', sans-serif;
-      font-family: 'Challenger Rough', sans-serif;
-      font-family: 'BaksoSapi Pro', sans-serif;
-      font-size: 20px;
+    #line {
+      font-family: 'nidaemoji';
+      font-size: 25px;
+      color: #9ca3a2;
+      text-align: center;
+      margin-bottom: -10px;
+    }
+    #day {
+      font-family: 'fontmaewmedium';
+      font-size: 25px;
       color: #b19865;
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: -10px;
     }
     
+    #date {
+      font-family: 'fontmaewmedium';
+      font-size: 30px;
+      color: #b19865;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    
+
+
   </style>
  <script>
     function updateClock() {
@@ -102,7 +107,7 @@
       var period = "AM";
       var day = estDate.getDate();
       var month = estDate.getMonth();
-      var daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var daysOfWeek = ['x Sunday x', '^ Monday ^', '> Tuesday <', '+ Wednesday +', '- Thursday -', '~ Friday ~', '# Saturday #',];
       var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
       // Determine period (AM/PM) and convert to 12-hour format
@@ -123,7 +128,7 @@
       var time = hours + ':' + minutes + ' ';
 
       // Update the clock element
-      document.getElementById('clock').textContent = time;document.getElementById('status').textContent = time;
+      document.getElementById('clock').textContent = time;
 
       // Update the location element
       document.getElementById('location').textContent = 'THAILAND';
@@ -131,10 +136,14 @@
       // Format the date as full day name, full month name, DD, YYYY
       var dayOfWeek = daysOfWeek[estDate.getDay()];
       var monthName = months[month];
-      var dateFormatted = dayOfWeek + ', ' + monthName + ' ' + day + ', ' + estDate.getFullYear();
+      var dateFormatted = day + ' ' + monthName + ' ' + estDate.getFullYear();
 
       // Update the date element
       document.getElementById('date').textContent = dateFormatted;
+      
+  
+      var dateFormatted = dayOfWeek;
+      document.getElementById('day').textContent = dateFormatted;
       
        // Format the date as full day name, full month name, DD, YYYY
       var time = period;
@@ -159,7 +168,8 @@
     <div id="emoji">abdefgstvz</div>
     <div id="container">
     <span id="clock"></span> <span id="status"></span></div>
-    
+    <div id="line">aaaaaaaaaa</div>
+    <div id="day"></div>
     <div id="date"></div>
   </div>
 
