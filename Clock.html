@@ -46,6 +46,7 @@
     
     #container {
       display: flex;
+      flex: initial;
       flex-direction: row;
       /*display: block;*/
       text-align: center;
@@ -139,10 +140,10 @@ align-content: center;
 				}
       // Determine icon day and night
       hrs = estDate.getHours();	
-        if (hrs >= 18 && hrs < 6) {
-					icon = 'C';
-				} else if (hrs >= 6 && hrs <= 18) {
+        if (hrs >= 6 && hrs <= 18) {
 					icon = 'B';
+				} else {
+					icon = 'C';
 				}
       // Determine greet
       hrs = estDate.getHours();	
