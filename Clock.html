@@ -1,23 +1,15 @@
 <html><head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <link href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
-  
+    <link href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
     <link href="https://olivemonsterz.github.io/Widget_Notion/nidaemoji.css" rel="stylesheet">
+    <link href="https://olivemonsterz.github.io/Widget_Notion/satangemoji1.css" rel="stylesheet">
+    <link href="https://olivemonsterz.github.io/Widget_Notion/OrdinaryFont.css" rel="stylesheet">
   
   
 
-  <link href="https://fonts.cdnfonts.com/css/planet-joy" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/spicy-crackers" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/pusing-kali" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/sweper" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/monday-banana" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/grilled-fish" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/spicy-pasta" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/marinero-tatuado" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/new-class" rel="stylesheet">
   <link href="https://fonts.cdnfonts.com/css/adventrue" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/challenger-rough" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/baksosapi-pro" rel="stylesheet">
+
   <title>EST Clock Widget</title>
   <style>
     #clock-container {
@@ -34,16 +26,17 @@
       /background: url(http://ssl.gstatic.com/ui/v1/disclosure/grey-disclosure-arrow-up-down.png) 100% no-repeat #f8f9fa;/
     }
     
-    #location {
-      font-size: 15px;
+    #greet {
+      font-family: 'OrdinaryFont';
+      font-size: 19px;
       text-align: left;
-      font-weight: bold;
+      /*font-weight: bold;*/
       color: #cfc9ac;
-      margin-bottom: 5px;
-      margin-left: 15px
+      margin-bottom: px;
+      margin-left: 20px
     }
     
-         #emoji {
+      #emoji {
       font-family: emoji;
       font-size: 20px;
       text-align: center;
@@ -52,24 +45,46 @@
     }  
     
     #container {
-      width: 190px;
+      display: flex;
+      flex-direction: row;
+      /*display: block;*/
       text-align: center;
+      width: 190px; height: 54px;
     }
 
     #clock {
-      font-family: 'Monday Banana', sans-serif;                               font-size: 54px;
+      font-family: 'Monday Banana', sans-serif;
+      font-size: 54px;
       font-weight: bold;
       color: #92695b;
       text-shadow: 1px 1px 2px pink;
-      
-      
+      width: 160px;
+    }
+    
+      #containeris {
+      display: grid;
+align-content: center;
+        width: 10px; 
+
     }
     
        #status {
       font-family: 'Adventrue', sans-serif;
-      font-size: 15px;
+      display: inline-block;
+      height: 27px;
+
+        font-size: 15px;
+        color: #70757a;
+
+    }
+    
+     #icon {
+      font-family: 'satangemoji1';
+      font-size: 30px;
       color: #92695b;
-      margin-left: -13px;
+      height: 27px;
+
+
     }
 
     #line {
@@ -100,75 +115,101 @@
   </style>
  <script>
     function updateClock() {
+    // TIME
+      var greet = " ";
       var date = new Date();
-      var estDate = new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
-      var hours = estDate.getHours();
+      var estDate = new Date(date.toLocaleString('en-US',
+                    { timeZone: 'Asia/Bangkok' }));
+      var hours = twelveHour(estDate.getHours());
       var minutes = estDate.getMinutes();
-      var period = "AM";
+      var period = " ";
+      var icon = " ";
+      
+      // Add leading zeros to hours
+      hours = hours < 10 ? '0' + hours : hours;
+      // Add leading zeros to minutes
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      
+      // Determine period (AM/PM) and convert to 12-hour format
+      if (estDate.getHours() >= 12) {
+					period += ' PM';
+				}
+				else {
+					period += ' AM';
+				}
+      // Determine icon day and night
+      hrs = estDate.getHours();	
+        if (hrs >= 18 && hrs < 6) {
+					icon = 'C';
+				} else if (hrs >= 6 && hrs <= 18) {
+					icon = 'B';
+				}
+      // Determine greet
+      hrs = estDate.getHours();	
+				if (hrs < 12) {
+					greet = 'Good Morning ๕';
+				} else if (hrs >= 12 && hrs <= 17) {
+					greet = 'Good Afternoon๔';
+				} else if (hrs >= 17 && hrs <= 24) {
+					greet = 'Good Evening๗';
+				}
+      
+      // Format the time as HH:MM
+      var time = hours + ':' + minutes ;
+
+      // The clock element
+      document.getElementById('greet').innerHTML = greet;
+      // The clock element
+      document.getElementById('emoji').textContent = 'abdefgstvz';      
+      // The clock element
+      document.getElementById('clock').textContent = time;      
+      document.getElementById('status').innerHTML = period;
+      document.getElementById('icon').innerHTML = icon;
+      
+      // Line element
+      document.getElementById('line').textContent = 'aaaaaaaaaa';
+      
+    // DATE
       var day = estDate.getDate();
       var month = estDate.getMonth();
       var daysOfWeek = ['x Sunday x', '^ Monday ^', '> Tuesday <', '+ Wednesday +', '- Thursday -', '~ Friday ~', '# Saturday #',];
       var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-
-      // Determine period (AM/PM) and convert to 12-hour format
-      if (hours >= 12) {
-        period = "PM";
-        hours = hours % 12;
-      }
-
-      // Handle midnight and noon
-      if (hours === 0) {
-        hours = 12;
-      }
-
-      // Add leading zeros to minutes
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-
-      // Format the time as HH:MM AM/PM
-      var time = hours + ':' + minutes + ' ';
-
-      // Update the clock element
-      document.getElementById('clock').textContent = time;
-
-      // Update the location element
-      document.getElementById('location').textContent = 'THAILAND';
-
+      
       // Format the date as full day name, full month name, DD, YYYY
       var dayOfWeek = daysOfWeek[estDate.getDay()];
       var monthName = months[month];
       var dateFormatted = day + ' ' + monthName + ' ' + estDate.getFullYear();
 
-      // Update the date element
+      // The date element
+      document.getElementById('day').innerHTML = dayOfWeek;      
       document.getElementById('date').textContent = dateFormatted;
       
-  
-      var dateFormatted = dayOfWeek;
-      document.getElementById('day').textContent = dateFormatted;
-      
-       // Format the date as full day name, full month name, DD, YYYY
-      var time = period;
-
-      // Update the date element
-      document.getElementById('status').textContent = time;
-      
-      
-      
+      // Determine convert to 12-hour format
+      function twelveHour(hour) {
+				if (hour > 12) {
+					return hour -= 12;
+				} else if (hour === 0) {
+					return hour = 12;
+				} else {
+					return hour;
+				}
+			}
     }
-
     // Update the clock every second
     setInterval(updateClock, 1000);
   </script>
 </head>
+  
 <body style="
     width: 190px;
     height: 250px;
 ">
   <div id="clock-container">
-    <div id="location"></div>
+    <div id="greet"></div>
     <div id="emoji">abdefgstvz</div>
     <div id="container">
-    <span id="clock"></span> <span id="status"></span></div>
-    <div id="line">aaaaaaaaaa</div>
+    <span id="clock"></span>     <div id="containeris"><span id="icon"></span><span id="status"></span></div></div>
+    <div id="line"></div>
     <div id="day"></div>
     <div id="date"></div>
   </div>
