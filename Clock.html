@@ -1,21 +1,19 @@
 <html><head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
-    <link href="https://olivemonsterz.github.io/Widget_Notion/nidaemoji.css" rel="stylesheet">
-    <link href="https://olivemonsterz.github.io/Widget_Notion/satangemoji1.css" rel="stylesheet">
     <link href="https://olivemonsterz.github.io/Widget_Notion/OrdinaryFont.css" rel="stylesheet">
+    <link href="https://olivemonsterz.github.io/Widget_Notion/emoji.css" rel="stylesheet">
+    <link href="https://olivemonsterz.github.io/Widget_Notion/satangemoji1.css" rel="stylesheet">
     <link href="https://olivemonsterz.github.io/Widget_Notion/goodlyy07.css" rel="stylesheet">
-  
-  
+    <link href="https://olivemonsterz.github.io/Widget_Notion/nidaemoji.css" rel="stylesheet">
+    <link href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
+       
+    <link href="https://fonts.cdnfonts.com/css/monday-banana" rel="stylesheet">
 
-  <link href="https://fonts.cdnfonts.com/css/monday-banana" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/css/adventrue" rel="stylesheet">
-
-  <title>EST Clock Widget</title>
+  <title>KITCHEN Clock Widget</title>
+  
   <style>
     #clock-container {
       display: flex;
-      font-family: Lyon-text, Georgia, ui-serif, serif;
       flex-direction: column;
       flex-shrink: 0;
       flex-grow: 1;
@@ -37,12 +35,14 @@
       margin-left: 20px
     }
     
-      #emoji {
+    #emoji {
       font-family: emoji;
       font-size: 20px;
       text-align: center;
+      font-weight: bold;
+      color: #cdd3d7;
       margin-top: 5px;
-      font-weight: bold; color: #cdd3d7;
+      margin-bottom: 2px;
     }  
     
     #container {
@@ -53,45 +53,40 @@
       text-align: center;
      /* height: 54px;*/
     }
-
+    
     #clock {
       font-family: 'Monday Banana', sans-serif;
-      font-size: 54px;
+      font-size: 52px;
       font-weight: bold;
       color: #92695b;
       text-shadow: 1px 1px 2px pink;
       width: 160px;
     }
     
-      #containeris {
+    #containeris {
       display: grid;
-/*align-content: center;*/
-        
-        width: 10px; height: 40px;
-          align-items: center;
-  justify-content: center;
-
+      /*align-content: center;*/
+      width: 10px; height: 40px;
+      align-items: center;
+      justify-content: center;
     }
     
-       #status {
-      font-family: 'goodlyy07';
-      display: inline-block;
-      /*text-align: start;*/
-        font-size: 38px;
-        color: #92695b;
-      margin-top: -10px;
-
-    }
-    
-     #icon {
+    #icon {
       font-family: 'satangemoji1';
       font-size: 30px;
       color: #70757a;      
       text-align: center; 
-       /*align-self: end;*/
-            margin-top: 5px;
-  
-
+      /*align-self: end;*/
+      margin-top: 5px;
+    }
+    
+    #status {
+      font-family: 'goodlyy07';
+      display: inline-block;
+      /*text-align: start;*/
+      font-size: 38px;
+      color: #92695b;
+      margin-top: -10px;
     }
 
     #line {
@@ -103,11 +98,13 @@
       margin-top: -10px;
       height: 20px;
     }
+    
     #day {
       font-family: 'fontmaewmedium';
       font-size: 25px;
       color: #b19865;
       text-align: center;
+      margin-top: -2px;
       margin-bottom: -12px;
     }
     
@@ -116,19 +113,17 @@
       font-size: 30px;
       color: #b19865;
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
-    
-
-
-  </style>
+   </style>
+  
  <script>
     function updateClock() {
+	    
     // TIME
       var greet = " ";
       var date = new Date();
-      var estDate = new Date(date.toLocaleString('en-US',
-                    { timeZone: 'Asia/Bangkok' }));
+      var estDate = new Date(date.toLocaleString('en-US',{ timeZone: 'Asia/Bangkok' }));
       var hours = twelveHour(estDate.getHours());
       var minutes = estDate.getMinutes();
       var period = " ";
@@ -146,6 +141,7 @@
 				else {
 					period += ' AM';
 				}
+      
       // Determine icon day and night
       hrs = estDate.getHours();	
         if (hrs >= 6 && hrs <= 18) {
@@ -153,6 +149,7 @@
 				} else {
 					icon = 'C';
 				}
+      
       // Determine greet
       hrs = estDate.getHours();	
 				if (hrs < 12) {
@@ -160,7 +157,7 @@
 				} else if (hrs >= 12 && hrs <= 17) {
 					greet = 'Good Afternoon๔';
 				} else if (hrs >= 17 && hrs <= 24) {
-					greet = 'Good Evening๗';
+					greet = 'Good Evening ๗';
 				}
       
       // Format the time as HH:MM
@@ -209,15 +206,17 @@
   </script>
 </head>
   
-<body style="
-    width: 190px;
-    height: 250px;
-">
+<body>
   <div id="clock-container">
     <div id="greet"></div>
     <div id="emoji">abdefgstvz</div>
     <div id="container">
-    <span id="clock"></span>     <div id="containeris"><span id="icon"></span><span id="status"></span></div></div>
+      <span id="clock"></span>
+      <div id="containeris">
+          <span id="icon"></span>
+          <span id="status"></span>
+      </div>
+    </div>
     <div id="line"></div>
     <div id="day"></div>
     <div id="date"></div>
