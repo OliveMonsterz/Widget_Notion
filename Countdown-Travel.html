@@ -115,6 +115,7 @@
     </style>
   </head>
 
+//---------------- interface ----------------//
   <body class="">
     
     <div>
@@ -138,12 +139,13 @@
           seconds
         </div>
     </div>
-      
+
+ //---------------- Set Date ----------------// 
   <script>
  
 
     const year = new Date().getFullYear();
-    const myDate = new Date('2025-07-16T05:00:00.000Z'); //-----------------Set Date//
+    const myDate = new Date('2025-07-16T05:00:00.000Z'); //--------Countdown Date--------//
     const startDate = moment(myDate);
     const padLeft = (num) => {
       if (String(num).length > 2) {
