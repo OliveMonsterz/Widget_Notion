@@ -141,18 +141,12 @@
       
   <script>
 
-    const currentYear = new Date().getFullYear();
-    const myDate = new Date('${currentYear +1} 00:00:00');
+    const year = new Date().getFullYear();
+    const myDate = new Date('2026-01-01 00:00:00');
     const startDate = moment(myDate);
     const padLeft = (num) => {
       if (String(num).length > 2) {
         return num;
-          //const year = new Date().getFullYear();
-    //const myDate = new Date('2026-01-01 00:00:00');
-    //const startDate = moment(myDate);
-    //const padLeft = (num) => {
-   //   if (String(num).length > 2) {
-    //    return num;
       }
       return String("00" + num).slice(-2);
     }
