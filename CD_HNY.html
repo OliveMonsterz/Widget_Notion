@@ -142,7 +142,7 @@
   <script>
 
     const year = new Date().getFullYear();
-    const myDate = new Date('2026-01-01H00:00:00.000Z');
+    const myDate = new Date('${currentYear+1}-01-01 00:00:00');
     const startDate = moment(myDate);
     const padLeft = (num) => {
       if (String(num).length > 2) {
