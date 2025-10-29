@@ -1,0 +1,914 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.cdnfonts.com/css/monday-banana" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/KanchaRT02.css" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/sunflower.css" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/Moji2.css" rel="stylesheet">  
+
+
+        
+    <title>CountDown Travel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.2.1/moment.min.js"></script>    
+    <style>
+
+body {
+      font-family: "Karla", sans-serif;
+      /*background: linear-gradient(135deg, #d7f0f3, #fffaf3);*/
+      background: transparent;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      display: flex;             /* ใช้ flex จัดกลาง */
+      justify-content: center;   /* จัดกลางแนวนอน */
+      align-items: center;       /* จัดกลางแนวตั้ง */
+      user-select: none;         /* ห้ามลากเลือกข้อความ */
+      opacity: 1;                /* ยังมองเห็นปกติ */
+    }
+
+    /* ส่วนหัว + ปุ่มอยู่บรรทัดเดียวกัน */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      display: flex;
+      flex-direction: row;
+      text-align: center;
+     height: 50px;
+     
+    }
+
+    .h1 {
+      /* --- โครงสร้างพื้นฐาน --- */
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      /* --- การจัดตำแหน่งใน flexbox --- */
+      align-self: center;
+      order: 0;
+      flex-grow: 0;
+      flex-shrink: 0;
+      /* --- ตัวอักษร --- */
+      font-family: 'sunflower';
+      font-size: 36px;
+      font-weight: 500;
+      color: #333;
+      letter-spacing: 0;
+      line-height: 1.5;
+      text-align: center;
+      white-space: pre-wrap;
+      word-break: break-word;
+      /* --- การแสดงผล --- */
+      overflow: visible;
+      z-index: 8;
+      cursor:default;
+    }
+
+      #text {
+      /* --- โครงสร้างพื้นฐาน --- */
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      /* --- การจัดตำแหน่งใน flexbox --- */
+      align-self: center;
+      order: 0;
+      flex-grow: 0;
+      flex-shrink: 0;
+      /* --- ตัวอักษร --- */
+      font-family: 'sunflower';
+      font-size: 36px;
+      font-weight: 500;
+      color: #333;
+      letter-spacing: 0;
+      line-height: 1.5;
+      text-align: center;
+      white-space: pre-wrap;
+      word-break: break-word;
+      /* --- การแสดงผล --- */
+      overflow: visible;
+      z-index: 8;
+      cursor:default;
+    }
+
+    .line {
+      font-family: 'sunflower';
+      font-size: 3em;
+      text-align: center;
+      height: 10px;
+      /* --- โครงสร้างพื้นฐาน --- */
+      margin: 0;
+      margin-bottom: 20px;
+      padding: 0;
+      border-radius: 0;
+      /* --- การจัดตำแหน่งใน flexbox --- */
+      align-self: center;
+      order: 0;
+      flex-grow: 0;
+      flex-shrink: 0;
+      /* --- การแสดงผล --- */
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      text-align: center;
+      user-select: none;      /* ห้ามลากเลือกข้อความ */
+      pointer-events: none;   /* ห้ามคลิก / hover / event ทั้งหมด */
+      opacity: 1;             /* ยังมองเห็นปกติ */
+      cursor: default;        /* เคอร์เซอร์ปกติ (ไม่เป็นมือ) */
+    }
+
+    /* ===== กล่องแสดงผล Countdown ===== */
+    .countdown-container {
+      display: flex;
+      flex-direction: row;
+      transform: translateY(-10px); 
+      /*gap: 15px;*/
+    }
+
+    .time-box {
+      padding: 10px 10px 0px 10px; /* บน ขวา ล่าง ซ้าย */
+      width: 75px;      /* กำหนดความกว้าง */
+      height: 100px;     /* กำหนดความสูง */
+      align-items: center; 
+    }
+
+    .numbers {
+      font-family: 'KanchaRT02';
+      font-size: 3em;
+      text-align: center;
+      
+    }
+
+    .unit {
+      font-size: .9em;
+      letter-spacing: 5px;
+      text-align: center;
+      justify-content: center; 
+      font-family: 'fontmaewmedium'; 
+      }
+
+      .unit::after {
+        content: "";
+        margin-left: -5px;  /* ลบช่องว่างสุดท้ายออก */
+    }
+
+    #days,#hours,#minutes,#seconds {
+      display: flex;
+      justify-content: center;         /* ข้อความกลางแนวนอน */
+      align-items: center;             /* ข้อความกลางแนวตั้ง */
+      }
+
+      #days,#hours,#minutes,#seconds {
+        color: #B99470;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 36px;
+      border: none;
+      background-color: transparent;
+      color: #333;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      }
+      
+      button:hover {
+        background-color: transparent;
+        
+    }
+    
+    /* ⚙️ Setting Button */
+    .setting-btn {
+      font-family: sunflower;
+      font-size: 36px; 
+      font-weight: 600;
+      letter-spacing: 0px;
+      text-align: center;
+      align-self: center; 
+      padding: 0px 0px;
+      margin: 3px;
+      cursor:pointer;
+      }
+      
+      .setting-btn:hover {
+        transform: scale(1.5);
+        color: #92695b;
+        text-shadow: 1px 1px 2px pink;
+    }
+    
+    /* 🔄 Reset Button */
+    #reset-btn {
+      background-color: transparent;
+      border-radius: 50px;
+      border: 0px transparent;
+      color: black;
+      font-family: 'Moji2';
+      font-size: 2rem;
+      letter-spacing: -7px;
+      padding: 5px 8px;
+      transform: translateY(-20px); 
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+      cursor:hand;
+      /*border: 1px solid;*/
+      }
+    
+      /* Button visibility on hover */
+      #reset-wrapper {
+        opacity: 0;
+        text-align: center; /* ✅ จัดปุ่มให้อยู่ตรงกลาง */
+        /*margin-top: 10px;   /* ✅ เพิ่มช่องว่างจาก countdown */
+        transition: opacity 0.3s ease;
+        }
+      
+      body:hover #reset-wrapper {
+        opacity: 1;
+        }
+        
+      #reset-btn:hover {
+        color: #92695b;
+    }
+
+    /* ===== Popup แจ้งเตือน (ใช้ร่วมกันได้ทั้ง Save / Reset) ===== */
+    .status-popup {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) scale(0.9);
+        color: #fff;
+        font-family: "Prompt", sans-serif;
+        padding: 12px 24px;
+        border-radius: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: all 0.4s ease;
+        z-index: 9999;
+        }
+        /* แอนิเมชันตอนแสดง */
+        .status-popup.show {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+    }
+    
+    /*-----------------------------------------------*/
+
+     /* ===== Setting Modal Popup ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.4);
+      font-family: Rubik;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #f7f6f3;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      position: relative;
+      text-align: center;
+      min-width: 300px;
+      font-family: Rubik;
+      color: black;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ปุ่มปิดมุมขวา */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      float: right;
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #777;
+      cursor: pointer;
+      transition: 0.3s;
+      }
+      
+      .close-btn:hover {
+      color: #e53935;
+      transform: scale(1.3);
+    }
+    
+        input[type="date"] {
+      padding: 10px 14px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 200px;
+    }
+
+    .save-btn {
+      margin-top: 1rem; /*10px;*/
+      /*width: 100%;*/
+      font-family: Rubik;
+      font-size: 1rem;
+      background-color: black; /* #4db6ac;*/
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      line-height: 14px;
+      text-align: center;
+    }
+
+    .save-btn:hover {
+      /*background-color: #777;*/
+      background-color: #b8f148;
+      color: black;
+    }
+
+    .error {
+      color: #d32f2f;
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    /*-----------------------------------------------*/
+    /* ===== ครบกำหนดแล้ว ===== */
+    .blink {
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      color: #92695b;
+      text-shadow: 1px 1px 2px pink;
+      display: flex;
+      flex-direction: row;
+      transform: translateY(-5px); 
+      gap: 15px;
+      width: 425px;      /* กำหนดความกว้าง */
+      height: 110px;     /* กำหนดความสูง */
+      /* 🧩 เริ่มด้วย animation ซูมออกก่อน แล้วค่อยกระพริบ */
+      animation: popIn 0.8s ease-out forwards, blinkText 1s infinite alternate;
+      animation-delay: 0s, 0.8s; /* เริ่ม blink หลังจาก pop จบ */
+      }
+      
+      /* ซูมออก */
+      @keyframes popIn {
+        0% { transform: scale(0.5); opacity: 0; }
+        60% { transform: scale(1); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      
+      /* กระพริบ */
+      @keyframes blinkText {
+        0% { opacity: 1; } /* เริ่มต้นชัดเจน */
+        60% { opacity: 1; }
+        100% { opacity: 0; } /* ค่อย ๆ หายไป */
+    }
+    
+
+    
+/*==================================================*/
+
+
+
+
+
+
+/*Modal CSS */
+
+
+.setting-option {
+  text-align: center;
+  font-family: Rubik;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+  
+}
+
+#background-color,
+#font-color,
+#font-family,
+#custom-text {
+  background-color: white;
+  border: none;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 6px;
+  width: 100%;
+  font-family: Karla;
+  font-size: 16px;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+
+.select, #custom-text, #background-color, #font-color, #font-family {
+  background-color: white;
+  border: none;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+
+/* Small screens (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  #clock {
+    padding: 20px;
+    font-size: 16px;
+    text-align: center;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+  }
+
+  #time {
+    font-size: 40px;
+  }
+
+  #settings-btn {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  #save-btn {
+    font-size: 12px;
+  }
+}
+
+/* Medium screens (tablets, 600px to 768px) */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+  #clock {
+    padding: 30px;
+    font-size: 18px;
+    text-align: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+  }
+
+  #time {
+    font-size: 55px;
+  }
+
+  #settings-btn {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .modal-content {
+    width: 80%;
+    padding: 25px;
+  }
+
+  #save-btn {
+    font-size: 13px;
+  }
+}
+
+/* Large screens (desktops, 768px and up) */
+@media only screen and (min-width: 769px) {
+  #clock {
+    padding: 50px;
+    font-size: 20px;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #time {
+    font-size: 70px;
+  }
+
+  #settings-btn {
+    font-size: 1rem;
+    padding: 0.313rem 0.5rem;
+  }
+
+  .modal-content {
+    width: 300px;
+    padding: 30px;
+  }
+
+  #save-btn {
+    font-size: 14px;
+    cursor:pointer
+  }
+}
+
+ </style>
+  </head>
+
+
+<body>
+
+    <!-- ===== Header ===== -->
+    <div class="header">
+      <button class="setting-btn" onclick="OpenPopup()">๓</button>
+      <span id="text">Location</span>
+      <span class="h1">๒๖๗๐</span>
+    </div>
+    <div class="line ">๙๙๙๙๙๙๙</div>
+
+    <!-- ===== Countdown ===== -->
+    <div id="result" class="countdown-container">
+      <div class="time-box">
+          <div id="days" class="numbers">00</div>
+          <div class="unit">DAYS</div>
+      </div>
+      <div class="time-box">
+          <div id="hours" class="numbers">00</div>
+          <div class="unit">HOURS</div>
+      </div>
+      <div class="time-box">
+          <div id="minutes" class="numbers">00</div>
+          <div class="unit">MINUTES</div>
+      </div>
+      <div class="time-box">
+          <div id="seconds" class="numbers">00</div>
+          <div class="unit">SECONDS</div>
+      </div>
+    </div>
+
+    <!-- ===== Reset Button ===== -->
+    <div id="reset-wrapper" class="reset-wrapper">
+      <button id="reset-btn">X</button>
+    </div>
+
+    <!-- ===== Modal for Settings ===== -->
+    <div id="dateModal" class="modal">
+      <div class="modal-content">
+          <button class="close-btn" onclick="ClosePopup()">✖</button>
+          <h3>Settings</h3>
+          
+          <label for="custom-text">Location</label>
+          <input type="text" id="custom-text" maxlength="25" placeholder="Enter your affirmation">
+          
+          <label for="background-color">Choose the Background Color</label>
+          <select id="background-color" id="background-color">
+            <option value="#FFFFFF">LM Default White</option>
+            <option value="#F7F6F3">LM Off White</option>
+            <option value="#F1F1EF">LM Notion Grey</option>
+            <option value="#F4EEEE">LM Notion Brown</option>
+            <option value="#FAEBDD">LM Notion Orange</option>
+            <option value="#FBF3DB">LM Notion Yellow</option>
+            <option value="#EDF3EC">LM Notion Green</option>
+            <option value="#E7F3F8">LM Notion Blue</option>
+            <option value="#F6F3F9">LM Notion Purple</option>
+            <option value="#FAF1F5">LM Notion Pink</option>
+            <option value="#FDEBEC">LM Notion Red</option>
+
+            <option value="#191919">DM Default</option>
+            <option value="#262626">DM Hover</option>
+            <option value="#202020">DM Sidebar</option>
+            <option value="#434040">DM Notion Brown</option>
+            <option value="#594A3A">DM Notion Orange</option>
+            <option value="#FDEBB9">DM Notion Yellow</option>
+            <option value="#D6FAD8">DM Notion Green</option>
+            <option value="#364954">DM Notion Blue</option>
+            <option value="#443F57">DM Notion Purple</option>
+            <option value="#533B4C">DM Notion Pink</option>
+            <option value="#594141">DM Notion Red</option>
+          </select>
+        
+        <div class="setting-option">
+          <label for="font-color">Choose the Font Color</label>
+          <select id="font-color">
+            <option value="#37352F">LM Notion Default</option>
+            <option value="#787774">LM Notion Grey</option>
+            <option value="#9F6B53">LM Notion Brown</option>
+            <option value="#D9730D">LM Notion Orange</option>
+            <option value="#CB912F">LM Notion Yellow</option>
+            <option value="#448361">LM Notion Green</option>
+            <option value="#337EA9">LM Notion Blue</option>
+            <option value="#9065B0">LM Notion Purple</option>
+            <option value="#C14C8A">LM Notion Pink</option>
+            <option value="#D44C47">LM Notion Red</option>
+
+            <option value="#979A9B">DM Notion Grey</option>
+            <option value="#D4D4D4">DM White</option>
+            <option value="#937264">DM Notion Brown</option>
+            <option value="#FFA344">DM Notion Orange</option>
+            <option value="#FFDC49">DM Notion Yellow</option>
+            <option value="#4DAB9A">DM Notion Green</option>
+            <option value="#529CCA">DM Notion Blue</option>
+            <option value="#9A6DD7">DM Notion Purple</option>
+            <option value="#E255A1">DM Notion Pink</option>
+            <option value="#FF7369">DM Notion Red</option>
+          </select>
+          
+
+
+          <label for="font-family">Pick your own font</label>
+          <select id="font-family">
+            <option value="'Karla', sans-serif">Karla</option>
+            <option value="'Kode Mono', serif">Mono</option>
+            <option value="'Space Grotesk', sans-serif">Grotesk</option>
+          </select>
+
+        </div>
+    <!--////////////////////////////////////////////////////-->
+          <label for="background-color">เลือกวัน</label>
+          <input type="date" id="countdownDate">
+      <br>
+          <button class="save-btn" onclick="saveCountdownDate()">💾 Save</button>
+          <div id="errorMsg" class="error"></div>
+      </div>
+    </div>
+
+<!--------------------------------------------------->
+
+
+  <!-- เสียงแจ้งเตือน -->
+  <!-- เสียงหลัก (ครบกำหนด) -->
+  <!--audio id="alarmSound">
+    <source src="https://proxy.notificationsounds.com/message-tones/oh-finally-355/download/file-sounds-752-oh-finally.ogg" type="audio/ogg">
+  </audio>-->
+
+  <!-- เสียงตอน hover ปุ่ม -->
+  <!--audio id="hoverSound">
+    <source src="https://proxy.notificationsounds.com/soft-subtle-ringtones/slick-notification/download/file-sounds-1329-slick.ogg" type="audio/ogg">
+  </audio>-->
+
+<!-- เสียงแจ้งเตือน error -->
+  <!--audio id="errorSound">
+    <source src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" type="audio/ogg">
+  </audio>-->
+
+  <!-- ===== เสียงประกอบ ===== -->
+  <!--<audio id="alarmSound">
+    <source src="https://proxy.notificationsounds.com/message-tones/oh-finally-355/download/file-sounds-752-oh-finally.ogg" type="audio/ogg">
+  </audio>-->
+  <audio id="alarmSound">
+    <source src="https://actions.google.com/sounds/v1/cartoon/pop.ogg" type="audio/ogg">
+  </audio>
+  <audio id="hoverSound">
+    <source src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg" type="audio/ogg">
+  </audio>
+  <audio id="errorSound">
+    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+  </audio>
+
+
+
+
+  <script>
+ 
+
+let countdownInterval;
+
+/* ===== เปิด/ปิด Modal ===== */
+function OpenPopup() {
+  document.getElementById("dateModal").style.display = "flex";
+}
+
+function ClosePopup() {
+  document.getElementById("dateModal").style.display = "none";
+  document.getElementById("errorMsg").textContent = "";
+}
+
+// ปิด Modal เมื่อคลิกพื้นหลัง
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("dateModal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+    document.getElementById("errorMsg").textContent = "";
+  }
+});
+
+const text = document.getElementById("text");
+const customTextInput = document.getElementById("custom-text");
+const resetBtn = document.getElementById("reset-btn");
+
+/* ===== โหลดค่าล่าสุดจาก LocalStorage ===== */
+function loadSettings() {
+  const savedText = localStorage.getItem("custom-text");
+  const savedDate = localStorage.getItem("countdownDate");
+
+  const result = document.getElementById("result");
+  result.classList.remove("blink");
+  result.innerHTML = `
+    <div class="time-box">
+      <div id="days" class="numbers">00</div>
+      <div class="unit">DAYS</div>
+    </div>
+    <div class="time-box">
+      <div id="hours" class="numbers">00</div>
+      <div class="unit">HOURS</div>
+    </div>
+    <div class="time-box">
+      <div id="minutes" class="numbers">00</div>
+      <div class="unit">MINUTES</div>
+    </div>
+    <div class="time-box">
+      <div id="seconds" class="numbers">00</div>
+      <div class="unit">SECONDS</div>
+    </div>
+  `;
+
+  // 🔹 กรณีเปิดครั้งแรกสุด
+  if (savedText === null && savedDate === null) {
+    text.textContent = "Location";
+    customTextInput.value = "Location";
+    localStorage.setItem("custom-text", "Location");
+    localStorage.setItem("countdownDate", "reset");
+    return;
+  }
+
+  // 🟢 โหลดข้อความ
+  if (savedText !== null) {
+    text.textContent = savedText;
+    customTextInput.value = savedText;
+  } else {
+    text.textContent = "Location";
+    customTextInput.value = "Location";
+  }
+
+
+
+   // 🔹 โหลดและเริ่มนับถอยหลัง
+  if (savedDate && savedDate !== "reset") {
+    const targetTime = new Date(savedDate).getTime();
+    if (!isNaN(targetTime)) {
+      startCountdown(targetTime);
+    }
+  }
+}
+
+/* ===== ฟังก์ชันเริ่มนับถอยหลัง ===== */
+function startCountdown(targetDate) {
+  clearInterval(countdownInterval);
+  const daysEl = document.getElementById("days");
+  const hoursEl = document.getElementById("hours");
+  const minutesEl = document.getElementById("minutes");
+  const secondsEl = document.getElementById("seconds");
+  const result = document.getElementById("result");
+  const alarmSound = document.getElementById("alarmSound");
+
+  countdownInterval = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      clearInterval(countdownInterval);
+      result.innerHTML = "ครบกำหนดแล้ว 🎉";
+      result.classList.add("blink");
+      alarmSound.play();
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    daysEl.textContent = String(days).padStart(2, '0');
+    hoursEl.textContent = String(hours).padStart(2, '0');
+    minutesEl.textContent = String(minutes).padStart(2, '0');
+    secondsEl.textContent = String(seconds).padStart(2, '0');
+  }, 1000);
+}
+
+/* ===== แสดงข้อความผิดพลาด ===== */
+function showError(msg) {
+  const errorMsg = document.getElementById("errorMsg");
+  const errorSound = document.getElementById("errorSound");
+  errorMsg.textContent = msg;
+  errorSound.currentTime = 0;
+  errorSound.play();
+}
+
+/* ===== บันทึกวันใหม่ ===== */
+function saveCountdownDate() {
+  const input = document.getElementById("countdownDate").value;
+  const result = document.getElementById("result");
+
+  // บันทึกข้อความ
+  localStorage.setItem("custom-text", customTextInput.value);
+  loadSettings();
+
+  if (!input) {
+    showError("⚠️ กรุณาเลือกวันก่อนกด Save");
+    return;
+  }
+
+  // รีเซ็ตหน้าจอ
+  result.classList.remove("blink");
+  result.innerHTML = `
+    <div class="time-box">
+      <div id="days" class="numbers">00</div>
+      <div class="unit">DAYS</div>
+    </div>
+    <div class="time-box">
+      <div id="hours" class="numbers">00</div>
+      <div class="unit">HOURS</div>
+    </div>
+    <div class="time-box">
+      <div id="minutes" class="numbers">00</div>
+      <div class="unit">MINUTES</div>
+    </div>
+    <div class="time-box">
+      <div id="seconds" class="numbers">00</div>
+      <div class="unit">SECONDS</div>
+    </div>
+  `;
+
+  // บันทึกวันใหม่
+  localStorage.setItem("countdownDate", input);
+  startCountdown(new Date(input).getTime());
+  ClosePopup();
+
+  // 🟢 แสดง popup แจ้งว่าบันทึกแล้ว
+  showSavePopup();
+}
+
+/* ===== ปุ่ม Reset ===== */
+resetBtn.addEventListener("click", () => {
+  clearInterval(countdownInterval);
+
+  localStorage.setItem("countdownDate", "reset");
+  localStorage.setItem("custom-text", "Location");
+
+  loadSettings();
+
+  document.getElementById("errorMsg").textContent = "";
+  document.getElementById("countdownDate").value = "";
+
+  showResetPopup();
+});
+
+/* ===== Popup แจ้งเตือน ===== */
+function showPopup(message, color) {
+  const popup = document.createElement("div");
+  popup.textContent = message;
+  popup.className = "status-popup";
+  popup.style.background = color;
+  document.body.appendChild(popup);
+
+  setTimeout(() => popup.classList.add("show"), 100);
+  setTimeout(() => {
+    popup.classList.remove("show");
+    setTimeout(() => popup.remove(), 500);
+  }, 2000);
+}
+
+/* ===== แยกฟังก์ชันย่อยสำหรับ Reset และ Save ===== */
+function showResetPopup() {
+  showPopup("รีเซ็ตสำเร็จแล้ว ✅", "rgba(0, 128, 255, 0.9)");
+}
+function showSavePopup() {
+  showPopup("บันทึกแล้ว ✅", "rgba(0, 180, 0, 0.9)");
+}
+
+/* ===== โหลดค่าล่าสุดทุกครั้งเมื่อเปิดเว็บ ===== */
+window.addEventListener("DOMContentLoaded", loadSettings);
+
+
+
+
+
+
+    /* ===== เสียง Hover ===== */
+    const hoverSound = document.getElementById("hoverSound");
+    document.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("mouseenter", () => {
+        hoverSound.currentTime = 0;
+        hoverSound.play();
+      });
+    });
+
+    /* ===== เสียง Click ===== */
+    const clickSound = document.getElementById("clickSound");
+    document.querySelectorAll(".save-btn, .close-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        clickSound.currentTime = 0;
+        clickSound.play();
+      });
+    });
+
+
+
+
+
+  </script>
+  
+</body></html>
