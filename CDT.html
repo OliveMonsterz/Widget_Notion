@@ -126,13 +126,24 @@ body {
       flex-direction: row;
       transform: translateY(-10px); 
       /*gap: 15px;*/
+      *width: 425px;      /* กำหนดความกว้าง */
+      border: 1px solid;
     }
 
-    .time-box {
+    .time-box1 {
+      padding: 10px 10px 0px 10px; /* บน ขวา ล่าง ซ้าย */
+      width: 60px;      /* กำหนดความกว้าง */
+      height: 100px;     /* กำหนดความสูง */
+      align-items: center; 
+      border: 1px solid;
+    }
+
+    .time-box2 {
       padding: 10px 10px 0px 10px; /* บน ขวา ล่าง ซ้าย */
       width: 75px;      /* กำหนดความกว้าง */
       height: 100px;     /* กำหนดความสูง */
       align-items: center; 
+      border: 1px solid;
     }
 
     .numbers {
@@ -282,6 +293,16 @@ body {
       color: black;
       align-items: center;
       justify-content: center;
+      max-height: 80vh;       /* จำกัดความสูงไม่เกิน 80% ของหน้าจอ */
+      overflow-y: auto;       /* เปิดให้เลื่อนขึ้นลงได้ */
+      overflow-x: hidden;     /* ปิดการเลื่อนแนวนอน */
+      -ms-overflow-style: none;  /* สำหรับ IE และ Edge เก่า: ซ่อน scrollbar */
+      scrollbar-width: none;     /* สำหรับ Firefox: ซ่อน scrollbar */
+      }
+    
+      /* สำหรับ Chrome, Edge, Safari */
+      .modal-content::-webkit-scrollbar {
+        display: none;  /* ซ่อน scrollbar จนกว่าจะเลื่อน */
     }
 
     /* ปุ่มปิดมุมขวา */
@@ -309,7 +330,15 @@ body {
       border-radius: 10px;
       font-size: 16px;
       width: 200px;
+      background:var(--glass);
     }
+
+    input[type="datetime-local"], 
+    input[type="date"]{
+    padding:10px 12px;border-radius:8px;
+    border:1px solid rgba(255,255,255,0.06);
+    background:var(--glass);color:inherit}
+    
 
     .save-btn {
       margin-top: 1rem; /*10px;*/
@@ -531,19 +560,19 @@ body {
 
     <!-- ===== Countdown ===== -->
     <div id="result" class="countdown-container">
-      <div class="time-box">
+      <div class="time-box1">
           <div id="days" class="numbers">00</div>
           <div class="unit">DAYS</div>
       </div>
-      <div class="time-box">
+      <div class="time-box1">
           <div id="hours" class="numbers">00</div>
           <div class="unit">HOURS</div>
       </div>
-      <div class="time-box">
+      <div class="time-box2">
           <div id="minutes" class="numbers">00</div>
           <div class="unit">MINUTES</div>
       </div>
-      <div class="time-box">
+      <div class="time-box2">
           <div id="seconds" class="numbers">00</div>
           <div class="unit">SECONDS</div>
       </div>
@@ -698,6 +727,7 @@ window.addEventListener("click", (e) => {
 const text = document.getElementById("text");
 const customTextInput = document.getElementById("custom-text");
 const resetBtn = document.getElementById("reset-btn");
+const datetimeInput = document.getElementById('datetime');
 
 /* ===== โหลดค่าล่าสุดจาก LocalStorage ===== */
 function loadSettings() {
@@ -707,19 +737,19 @@ function loadSettings() {
   const result = document.getElementById("result");
   result.classList.remove("blink");
   result.innerHTML = `
-    <div class="time-box">
+    <div class="time-box1">
       <div id="days" class="numbers">00</div>
       <div class="unit">DAYS</div>
     </div>
-    <div class="time-box">
+    <div class="time-box1">
       <div id="hours" class="numbers">00</div>
       <div class="unit">HOURS</div>
     </div>
-    <div class="time-box">
+    <div class="time-box2">
       <div id="minutes" class="numbers">00</div>
       <div class="unit">MINUTES</div>
     </div>
-    <div class="time-box">
+    <div class="time-box2">
       <div id="seconds" class="numbers">00</div>
       <div class="unit">SECONDS</div>
     </div>
@@ -766,7 +796,13 @@ function startCountdown(targetDate) {
 
   countdownInterval = setInterval(() => {
     const now = new Date().getTime();
-    const distance = targetDate - now;
+    //const distance = targetDate - now;
+
+        // 🕐 ปรับเวลาไทย (+7 ชั่วโมง)
+    const timezoneOffset = 7 * 60 * 60 * 1000;
+    const nowTH = now + timezoneOffset;
+
+    const distance = targetDate - nowTH;
 
     if (distance <= 0) {
       clearInterval(countdownInterval);
@@ -811,22 +847,25 @@ function saveCountdownDate() {
     return;
   }
 
+    // 🕐 แปลงวันจาก input เป็นเวลาไทยเที่ยงคืน
+  const target = new Date(`${input}T00:00:00+07:00`).getTime();
+
   // รีเซ็ตหน้าจอ
   result.classList.remove("blink");
   result.innerHTML = `
-    <div class="time-box">
+    <div class="time-box1">
       <div id="days" class="numbers">00</div>
       <div class="unit">DAYS</div>
     </div>
-    <div class="time-box">
+    <div class="time-box1">
       <div id="hours" class="numbers">00</div>
       <div class="unit">HOURS</div>
     </div>
-    <div class="time-box">
+    <div class="time-box2">
       <div id="minutes" class="numbers">00</div>
       <div class="unit">MINUTES</div>
     </div>
-    <div class="time-box">
+    <div class="time-box2">
       <div id="seconds" class="numbers">00</div>
       <div class="unit">SECONDS</div>
     </div>
