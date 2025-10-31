@@ -2,5 +2,5 @@
     font-family: 'DSEmojiep4';
     font-style: normal;
     font-weight: 400;
-    src: url('https://2ttf.com/webfont/5c6Dk1S1vy8/webfont.ttf') format('truetype');
+    src: local('DSEmojiep4'), url('https://2ttf.com/webfont/5c6Dk1S1vy8/webfont.ttf') format('truetype');
 }
