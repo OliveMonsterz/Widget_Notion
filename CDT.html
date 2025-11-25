@@ -1,12 +1,13 @@
 <html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.cdnfonts.com/css/monday-banana" rel="stylesheet">
-        <link href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
-        <link href="https://olivemonsterz.github.io/Widget_Notion/KanchaRT02.css" rel="stylesheet">
-        <link href="https://olivemonsterz.github.io/Widget_Notion/sunflower.css" rel="stylesheet">
-        <link href="https://olivemonsterz.github.io/Widget_Notion/Moji2.css" rel="stylesheet">  
-
+        <link rel="preconnect" href="https://fonts.cdnfonts.com/css/monday-banana" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/fontmaewmedium.css" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/KanchaRT02.css" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/sunflower.css" rel="stylesheet">
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/Moji2.css" rel="stylesheet">  
+        <link rel="preconnect" href="https://olivemonsterz.github.io/Widget_Notion/ime2.css" rel="stylesheet">
+        
 
         
     <title>CountDown Travel</title>
@@ -124,7 +125,7 @@ body {
     .countdown-container {
       display: flex;
       flex-direction: row;
-      transform: translateY(-10px); 
+      transform: translateY(-20px); 
       /*gap: 15px;*/
       *width: 425px;      /* กำหนดความกว้าง */
       /*border: 1px solid;*/
@@ -194,7 +195,7 @@ body {
     
     /* ⚙️ Setting Button */
     .setting-btn {
-      font-family: sunflower;
+      font-family: 'sunflower';
       font-size: 36px; 
       font-weight: 600;
       letter-spacing: 0px;
@@ -217,11 +218,11 @@ body {
       border-radius: 50px;
       border: 0px transparent;
       color: black;
-      font-family: 'Moji2';
+      font-family: 'Moji2'; /*font-family: 'DSEmojiep4';*/
       font-size: 2rem;
       letter-spacing: -7px;
       padding: 5px 8px;
-      transform: translateY(-20px); 
+      transform: translateY(-40px); 
       transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
       cursor:hand;
       /*border: 1px solid;*/
@@ -330,15 +331,8 @@ body {
       border-radius: 10px;
       font-size: 16px;
       width: 200px;
-      background:var(--glass);
+      /*background:var(--glass);color:inherit}*/
     }
-
-    input[type="datetime-local"], 
-    input[type="date"]{
-    padding:10px 12px;border-radius:8px;
-    border:1px solid rgba(255,255,255,0.06);
-    background:var(--glass);color:inherit}
-    
 
     .save-btn {
       margin-top: 1rem; /*10px;*/
@@ -581,6 +575,7 @@ body {
     <!-- ===== Reset Button ===== -->
     <div id="reset-wrapper" class="reset-wrapper">
       <button id="reset-btn">X</button>
+      <!--button id="reset-btn">i</button-->
     </div>
 
     <!-- ===== Modal for Settings ===== -->
@@ -594,6 +589,7 @@ body {
           
           <label for="background-color">Choose the Background Color</label>
           <select id="background-color" id="background-color">
+            <option value="transparent">LM Default White</option>
             <option value="#FFFFFF">LM Default White</option>
             <option value="#F7F6F3">LM Off White</option>
             <option value="#F1F1EF">LM Notion Grey</option>
@@ -622,6 +618,7 @@ body {
         <div class="setting-option">
           <label for="font-color">Choose the Font Color</label>
           <select id="font-color">
+            <option value="#000000">LM Default</option>
             <option value="#37352F">LM Notion Default</option>
             <option value="#787774">LM Notion Grey</option>
             <option value="#9F6B53">LM Notion Brown</option>
@@ -649,9 +646,9 @@ body {
 
           <label for="font-family">Pick your own font</label>
           <select id="font-family">
-            <option value="'Karla', sans-serif">Karla</option>
-            <option value="'Kode Mono', serif">Mono</option>
-            <option value="'Space Grotesk', sans-serif">Grotesk</option>
+            <option value="'sunflower', sans-serif">Sunflower</option>
+            <option value="'ime2', serif">ime2</option>
+            <option value="'Fontmaewmedium', sans-serif">Fontmaewmedium</option>
           </select>
 
         </div>
@@ -729,9 +726,16 @@ const customTextInput = document.getElementById("custom-text");
 const resetBtn = document.getElementById("reset-btn");
 const datetimeInput = document.getElementById('datetime');
 
+const backgroundColorSelect = document.getElementById("background-color");
+const fontColorSelect = document.getElementById("font-color");
+const fontFamilySelect = document.getElementById("font-family");
+
 /* ===== โหลดค่าล่าสุดจาก LocalStorage ===== */
 function loadSettings() {
   const savedText = localStorage.getItem("custom-text");
+  const savedBackgroundColor = localStorage.getItem("background-color");
+  const savedFontColor = localStorage.getItem("font-color");
+  const savedFontFamily = localStorage.getItem("font-family");
   const savedDate = localStorage.getItem("countdownDate");
 
   const result = document.getElementById("result");
@@ -756,11 +760,18 @@ function loadSettings() {
   `;
 
   // 🔹 กรณีเปิดครั้งแรกสุด
-  if (savedText === null && savedDate === null) {
+  if (savedText === null && 
+      savedBackgroundColor === null && 
+      savedFontColor === null && 
+      savedFontfamily === null && 
+      savedDate === null) {
     text.textContent = "Location";
     customTextInput.value = "Location";
     localStorage.setItem("custom-text", "Location");
     localStorage.setItem("countdownDate", "reset");
+    document.body.style.backgroundColor = "transparent";
+    document.body.style.color = "#000";
+    text.style.fontFamily = "sunflower";
     return;
   }
 
@@ -773,7 +784,23 @@ function loadSettings() {
     customTextInput.value = "Location";
   }
 
+  // 🎨 โหลดสีพื้นหลัง
+  if (savedBackgroundColor !== null) {
+    document.body.style.backgroundColor = savedBackgroundColor;
+    backgroundColorSelect.value = savedBackgroundColor;
+  }
 
+  // 🎨 โหลดสีฟอนต์
+  if (savedFontColor !== null) {
+    document.body.style.color = savedFontColor;
+    fontColorSelect.value = savedFontColor;
+  }
+
+  // 🔤 โหลดฟอนต์
+  if (savedFontFamily !== null) {
+    text.style.fontFamily = savedFontFamily;
+    fontFamilySelect.value = savedFontFamily;
+  }
 
    // 🔹 โหลดและเริ่มนับถอยหลัง
   if (savedDate && savedDate !== "reset") {
@@ -840,6 +867,17 @@ function saveCountdownDate() {
 
   // บันทึกข้อความ
   localStorage.setItem("custom-text", customTextInput.value);
+
+    // 🔹 บันทึกการตั้งค่าพื้นหลัง / ฟอนต์
+  localStorage.setItem("background-color", backgroundColorSelect.value);
+  localStorage.setItem("font-color", fontColorSelect.value);
+  localStorage.setItem("font-family", fontFamilySelect.value);
+
+  // 🔹 อัปเดตการแสดงผลทันที
+  document.body.style.backgroundColor = backgroundColorSelect.value;
+  document.body.style.color = fontColorSelect.value;
+  text.style.fontFamily = fontFamilySelect.value;
+
   loadSettings();
 
   if (!input) {
@@ -886,6 +924,10 @@ resetBtn.addEventListener("click", () => {
 
   localStorage.setItem("countdownDate", "reset");
   localStorage.setItem("custom-text", "Location");
+
+    document.body.style.backgroundColor = "transparent";
+    document.body.style.color = "#000";
+    text.style.fontFamily = "sunflower";
 
   loadSettings();
 
